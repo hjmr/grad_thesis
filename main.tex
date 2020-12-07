@@ -1,0 +1,91 @@
+% 独自のコマンド
+
+% ■ アブストラクト
+%       \begin{jabstract} 〜 \end{jabstract}    ：日本語のアブストラクト
+%       \begin{eabstract} 〜 \end{eabstract}    ：英語のアブストラクト
+
+% ■ 謝辞
+%       \begin{acknowledgment} 〜 \end{acknowledgment}
+
+% ■ 文献リスト
+%       \begin{bib}[100] 〜 \end{bib}
+
+
+\newif\ifjapanese
+
+\japanesetrue   % 論文全体を日本語で書く（英語で書くならコメントアウト）
+
+\ifjapanese
+        \documentclass[11pt]{ujreport}
+        \renewcommand{\bibname}{参考文献}
+        \newcommand{\acknowledgmentname}{謝辞}
+\else
+        \documentclass[11pt]{report}
+        \newcommand{\acknowledgmentname}{Acknowledgment}
+\fi
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{bmpsize}
+\usepackage{ascmac}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+\usepackage{mulabo_thesis}
+
+\bindermode     % バインダ用余白設定
+
+% 日本語情報（必要なら）
+\jclass         {卒業論文}                                      % 論文種別
+\jtitle         {卒業論文用\\\LaTeX\ テンプレート}              % タイトル。改行する場合は\\を入れる
+\juniv          {神戸大学}                                      % 大学名
+\jfaculty       {国際文化学部}                                  % 学部、学科
+\jauthor        {神戸 太郎}                                     % 著者
+\jadvisor       {ほげ山 ほげ太}{教授}                           % 指導教員、形式は『{名前}{肩書}』
+\jsubadvisor    {ばあ中 ほげ子}{教授}                           % 副指導教員、形式は『{名前}{肩書}』
+\jhyear         {平成30年度}                                    % 平成○年度
+\jsyear         {2018}                                          % 西暦○年度
+\jkeyword       {\LaTeX、テンプレート、卒業論文}                % 論文のキーワード
+
+% 英語情報（必要なら）
+\eclass         {Graduation Thesis}                             % 論文種別
+\etitle         {A \LaTeX\ Template\\for\\Graduation Thesis}    % タイトル。改行する場合は\\を入れる
+\euniv          {Kobe University}                               % 大学名
+\efaculty       {Faculty of Intercultural Studies}              % 学部、学科
+\eauthor        {Taro Kobe}                                     % 著者
+\eadvisor       {Professor}{Hogeta Hogeyama}                    % 指導教員、形式は『{肩書}{名前}』
+\esubadvisor    {Professor}{Hogeko Bahnaka}                     % 副指導教員、形式は『{肩書}{名前}』
+\eyear          {2018}                                          % 西暦○年
+\ekeyword       {\LaTeX, Templete, Graduation Thesis}           % 論文のキーワード
+
+
+
+
+
+\begin{document}
+
+\jmaketitle             % 表紙（日本語）、不要ならコメントアウト
+\emaketitle             % 表紙（英語）、不要ならコメントアウト
+
+\include{00_abstract}   % アブストラクト。要独自コマンド、include先参照のこと
+
+\tableofcontents        % 目次
+\listoffigures          % 表目次
+\listoftables           % 図目次
+
+\pagenumbering{arabic}
+
+\include{01}    % 本文1
+\include{02}    % 本文2
+\include{03}    % 本文3
+\include{04}    % 本文4
+
+\include{90_acknowledgment}     % 謝辞。要独自コマンド、include先参照のこと
+\include{91_bibliography}       % 参考文献。要独自コマンド、include先参照のこと
+\appendix
+\include{92_appendix}           % 付録
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: japanese-latex
+%%% TeX-master: t
+%%% End:

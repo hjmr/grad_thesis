@@ -1,0 +1,197 @@
+% 変数定義
+\makeatletter
+
+% 変数読み込み
+\def\jclass#1{\gdef\@jclass{#1}}
+\def\jtitle#1{\gdef\@jtitle{#1}}
+\def\juniv#1{\gdef\@juniv{#1}}
+\def\jfaculty#1{\gdef\@jfaculty{#1}}
+\def\jauthor#1{\gdef\@jauthor{#1}}
+\def\jadvisor#1#2{\gdef\@jadvisor{#1}\gdef\@jposition{#2}}
+\def\jsubadvisor#1#2{\gdef\@jsubadvisor{#1}\gdef\@jsubposition{#2}}
+\def\jhyear#1{\gdef\@jhyear{#1}}
+\def\jsyear#1{\gdef\@jsyear{#1}}
+\def\jkeyword#1{\gdef\@jkeyword{#1}}
+\def\eclass#1{\gdef\@eclass{#1}}
+\def\etitle#1{\gdef\@etitle{#1}}
+\def\euniv#1{\gdef\@euniv{#1}}
+\def\efaculty#1{\gdef\@efaculty{#1}}
+\def\eauthor#1{\gdef\@eauthor{#1}}
+\def\eadvisor#1#2{\gdef\@eposition{#1}\gdef\@eadvisor{#2}}
+\def\esubadvisor#1#2{\gdef\@esubposition{#1}\gdef\@esubadvisor{#2}}
+\def\eyear#1{\gdef\@eyear{#1}}
+\def\ekeyword#1{\gdef\@ekeyword{#1}}
+
+% 余白設定（左右対称）
+\setlength{\textwidth}{16.92cm}
+\setlength{\oddsidemargin}{0mm}
+\setlength{\evensidemargin}{0mm}
+\setlength{\topmargin}{-1cm}
+\setlength{\textheight}{24cm}
+\setlength{\footskip}{18mm}
+
+% 余白設定（左綴じ用）
+\newcommand{\bindermode}{%
+        \setlength{\textwidth}{16cm}
+        \setlength{\oddsidemargin}{10mm}
+        \setlength{\evensidemargin}{10mm}
+        \setlength{\topmargin}{-1cm}
+        \setlength{\textheight}{24cm}
+        \setlength{\footskip}{18mm}
+}
+
+% 表紙用行間広め定義
+\newenvironment{lineskiptitle}{%
+        \baselineskip = 1.5cm
+}
+
+% 表紙の定義（日本語）
+\def\jmaketitle{\par
+        \begingroup
+        \@jmaketitle
+        \endgroup
+}
+\def\@jmaketitle{%
+        \thispagestyle{empty}
+        \begin{center}
+                {\Large \@jhyear}
+                \vspace{0.5cm}\par
+                {\Large \@jclass}
+                \vfill
+                \begin{lineskiptitle}
+                {\huge\bf \@jtitle}
+                \end{lineskiptitle}
+                \vfill
+                {\Large \@juniv\ \@jfaculty}
+                \vspace{0.5cm}\par
+                {\LARGE \@jauthor}
+                \vspace{2cm}\par
+                {\Large 指導教員：\ \@jadvisor\ \@jposition}
+                \vspace{1cm}\par
+                {\Large 副指導教員：\ \@jsubadvisor\ \@jsubposition}
+        \end{center}
+        \newpage
+        \pagenumbering{roman}
+}
+
+% 表紙の定義（英語）
+\def\emaketitle{\par
+        \begingroup
+        \@emaketitle
+        \endgroup
+}
+\def\@emaketitle{%
+        \thispagestyle{empty}
+        \begin{center}
+                {\Large \@eyear}
+                \vspace{0.5cm}\par
+                {\Large \@eclass}
+                \vfill
+                \begin{lineskiptitle}
+                {\Huge\sf \@etitle}
+                \end{lineskiptitle}
+                \vfill
+                {\Large \@efaculty,\ \@euniv}
+                \vspace{0.5cm}\par
+                {\LARGE \@eauthor}
+                \vspace{2cm}\par
+                {\Large Advisor:\ \@eposition\ \@eadvisor}
+                \vspace{1cm}\par
+                {\Large Advisor:\ \@esubposition\ \@esubadvisor}
+        \end{center}
+        \newpage
+        \pagenumbering{roman}
+}
+
+% アブストラクト用行間広め設定
+\newenvironment{lineskipabst}{%
+        \baselineskip = 1cm
+}
+
+% アブストラクトの定義（日本語）
+\newenvironment{jabstract}{%
+        \begin{center}
+                {\Large\bf \@jclass 概要 \@jsyear 年度（\@jhyear）}
+                \vspace{1cm}\par
+                \begin{lineskipabst}
+                {\LARGE\bf \@jtitle}\vspace{2cm}
+                \end{lineskipabst}
+        \end{center}
+        \parindent=1zw
+        \ifjapanese \else \renewcommand{\baselinestretch}{1.15}\selectfont \fi
+}{
+        \vfill
+        {\bf キーワード：} \@jkeyword
+        \newpage
+        \ifjapanese \parindent=1zw \else \parindent=1.6zw \fi
+        \renewcommand{\baselinestretch}{1.0}\selectfont
+}
+
+% アブストラクトの定義（英語）
+\newenvironment{eabstract}{%
+        \begin{center}
+                {\Large\bf \@eclass\ Abstract}
+                \vspace{1cm}\par
+                \begin{lineskipabst}
+                {\LARGE\sf \@etitle}\vspace{2cm}
+                \end{lineskipabst}
+        \end{center}
+        \parindent=1.6zw
+        \ifjapanese \renewcommand{\baselinestretch}{0.89}\selectfont \fi
+}{
+        \vfill
+        {\sf Keywords:} \@ekeyword
+        \newpage
+        \ifjapanese \parindent=1zw \else \parindent=1.6zw \fi
+        \renewcommand{\baselinestretch}{1.0}\selectfont
+}
+
+% 目次環境再定義
+\renewcommand{\tableofcontents}{%
+        \section*{\contentsname}
+        \@starttoc{toc}
+        \newpage
+}
+
+% 図目次環境再定義
+\renewcommand{\listoffigures}{%
+        \section*{\listfigurename}
+        \@starttoc{lof}
+        \newpage
+}
+
+% 表目次環境再定義
+\renewcommand{\listoftables}{%
+        \section*{\listtablename}
+        \@starttoc{lot}
+        \newpage
+}
+
+% 謝辞環境の作成
+\newenvironment{acknowledgment}{%
+        \addcontentsline{toc}{chapter}{\acknowledgmentname}
+        \chapter*{\acknowledgmentname}
+}{}
+
+% 参考文献環境の作成
+\newenvironment{bib}[1][100]{%
+        \addcontentsline{toc}{chapter}{\bibname}
+        \begin{thebibliography}{#1}
+}{
+        \end{thebibliography}
+}
+
+% subsubsection 環境の設定変更
+\setcounter{secnumdepth}{3}
+\renewcommand\thesubsubsection{(\arabic{subsubsection})}
+
+% 箇条書きの行間設定
+\renewenvironment{itemize}{%
+   \begin{list}{\parbox{1zw}{$\bullet$}}{%
+      \setlength{\itemsep}{0em}
+      \setlength{\parsep}{0em}
+   }}{%
+   \end{list}
+}
+
+\makeatother
